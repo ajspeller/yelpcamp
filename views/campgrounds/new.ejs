@@ -1,9 +1,9 @@
-<% include partials/header %>
+<% include ../partials/header %>
 
   <div class="container">
 
     <div class="row">
-      
+
       <h2 class="center-align"> Create New Campground</h2>
 
       <div style="width: 40%; margin: 50px auto;">
@@ -11,12 +11,17 @@
 
         <form method="post" action="/campgrounds">
           <div class="input-field">
-            <input required type="text" name="name" placeholder="New Campground">
+            <input required type="text" name="campground[name]" placeholder="New Campground">
           </div>
 
           <div class="input-field">
-            <input required type="text" name="image" placeholder="Image URL">
+            <input required type="text" name="campground[image]" placeholder="Image URL">
           </div>
+
+          <div class="input-field">
+            <input required type="text" name="campground[description]" placeholder="Description">
+          </div>
+          
           <button class="waves-effect waves-light btn">Add Campground</button>
         </form>
 
@@ -31,4 +36,4 @@
 
   </div>
 
-  <% include partials/footer %>
+  <% include ../partials/footer %>
