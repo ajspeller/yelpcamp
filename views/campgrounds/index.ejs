@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include ../partials/header %>
 
   <div class="container">
 
@@ -6,7 +6,7 @@
       <h1>Wecome to YelpCamp</h1>
       <p>View our hand-picked campgrounds from all over the world</p>
       <p>
-        <a class="waves-effect waves-light btn" href="/campgrounds/new">Add New Campground</a>
+        <a class="waves-effect waves-light btn-large" href="/campgrounds/new">Add New Campground</a>
       </p>
     </header>
 
@@ -26,8 +26,11 @@
             <div class="card small">
               <img class="responsive-img" src="<%= campground.image %>">
               <div class="card-content">
-                <p class="flow-text">
+                <p class="flow-text center-align">
                   <%= campground.name %>
+                </p>
+                <p class="center-align ">
+                  <a href="/campgrounds/<%= campground._id %>" class="waves-effect waves-light btn-small">More Info</a>
                 </p>
               </div>
             </div>
@@ -37,6 +40,6 @@
       </div>
     </div>
 
-    <% include partials/footer %>
+    <% include ../partials/footer %>
 
   </div>

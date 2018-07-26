@@ -1,6 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const Campground = require('./models/campground');
+const Comment = require('./models/comment');
+const User = require('./models/user');
+const seedDB = require('./seeds');
+
+seedDB();
+
+mongoose.connect('mongodb://ajspeller:ajspeller1@ds021299.mlab.com:21299/ajs-yelpcamp', {
+    useNewUrlParser: true
+  })
+  .then(() => console.log('Database connections successful'))
+  .catch((err) => console.log('Database connection failed', JSON.stringify(undefined, err, 2)));
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -12,58 +24,80 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-let campgrounds = [{
-    name: 'Yellow Stone',
-    image: 'https://images.unsplash.com/photo-1508873696983-2dfd5898f08b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5cedc6b95f731395da7269d2341f9a5e&auto=format&fit=crop&w=1050&q=80'
-  },
-  {
-    name: 'Summer Valley Trail',
-    image: 'https://images.unsplash.com/photo-1496545672447-f699b503d270?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ba3fa37b995a705a01d022cada13f726&auto=format&fit=crop&w=1051&q=80'
-  },
-  {
-    name: 'Tree Stump Forest',
-    image: 'https://images.unsplash.com/photo-1496080174650-637e3f22fa03?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b7ca353cfcc4299e6c3d431ff862e1cf&auto=format&fit=crop&w=1006&q=80'
-  }, {
-    name: 'Summer Valley Trail',
-    image: 'https://images.unsplash.com/photo-1496545672447-f699b503d270?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ba3fa37b995a705a01d022cada13f726&auto=format&fit=crop&w=1051&q=80'
-  },
-  {
-    name: 'Tree Stump Forest',
-    image: 'https://images.unsplash.com/photo-1496080174650-637e3f22fa03?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b7ca353cfcc4299e6c3d431ff862e1cf&auto=format&fit=crop&w=1006&q=80'
-  },
-  {
-    name: 'Summer Valley Trail',
-    image: 'https://images.unsplash.com/photo-1496545672447-f699b503d270?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ba3fa37b995a705a01d022cada13f726&auto=format&fit=crop&w=1051&q=80'
-  },
-  {
-    name: 'Tree Stump Forest',
-    image: 'https://images.unsplash.com/photo-1496080174650-637e3f22fa03?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b7ca353cfcc4299e6c3d431ff862e1cf&auto=format&fit=crop&w=1006&q=80'
-  },
-]
-
 app.get('/', (req, res, next) => {
   res.render('landing');
 });
 
 app.get('/campgrounds', (req, res, next) => {
-  res.render('campgrounds', {
-    campgrounds
-  });
+
+  Campground.find({})
+    .then(campgrounds => {
+      res.render('campgrounds/index', {
+        campgrounds
+      });
+    }).catch(err => {
+      console.log(err);
+    });
+
 });
 
 app.get('/campgrounds/new', (req, res, next) => {
-  res.render('new');
+  res.render('campgrounds/new');
+});
+
+app.get('/campgrounds/:id', (req, res, next) => {
+  const id = req.params.id;
+  Campground
+    .findById(id)
+    .populate("comments")
+    .exec()
+    .then(campground => {
+      res.render('campgrounds/show', {
+        campground
+      });
+    })
+    .catch(err => console.log(err));
 });
 
 app.post('/campgrounds', (req, res, next) => {
-  const name = req.body.name;
-  const image = req.body.image;
-  const newCampground = {
-    name: name,
-    image: image
-  };
-  campgrounds.push(newCampground);
-  res.redirect('/campgrounds');
+  Campground.create(req.body.campground)
+    .then(campground => {
+      res.redirect('/campgrounds');
+    }).catch(err => {
+      console.log(err);
+    });
+});
+
+// =====================
+// COMMENTS ROUTES
+// =====================
+
+app.get('/campgrounds/:id/comments/new', (req, res, next) => {
+  Campground
+    .findById(req.params.id)
+    .then(campground => res.render('comments/new', {
+      campground
+    }))
+    .catch(err => console.log(err));
+});
+
+app.post('/campgrounds/:id/comments', (req, res, next) => {
+  let foundCampground;
+  Campground
+    .findById(req.params.id)
+    .then(campground => {
+      foundCampground = campground;
+      return Comment.create(req.body.comment);
+    })
+    .then(comment => {
+      foundCampground.comments.push(comment);
+      foundCampground.save();
+      res.redirect(`/campgrounds/${foundCampground._id}`);
+    })
+    .catch(err => {
+      console.log(err);
+      res.redirect('/campgrounds');
+    });
 });
 
 app.listen(PORT, () => {
