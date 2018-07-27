@@ -4,28 +4,76 @@
 
     <div class="row">
 
-      <h1>
-        <%= campground.name %>
-      </h1>
-
-      <img class="responsive-img" src="<%= campground.image %>" alt="<%= campground.name %>">
-
-      <p>
-        <%= campground.description %>
-      </p>
-
-      <p>
-        <a class="waves-effect waves-light btn" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
-      </p>
-
-      <% campground.comments.forEach(comment => { %>
-        <p>
-          <strong>
-            <%= comment.author %>
-          </strong> -
-          <%= comment.text %>
+      <div class="col s12 m3">
+        <p class="flow-text">
+          Yelp Camp
         </p>
-        <% }) %>
+        <div class="collection">
+          <a href="#!" class="collection-item">Info 1</a>
+          <a href="#!" class="collection-item active">Info 2</a>
+          <a href="#!" class="collection-item">Info 3</a>
+          <a href="#!" class="collection-item">Info 4</a>
+        </div>
+      </div>
+
+      <div class="col m9">
+
+        <div class="card">
+          <div class="card-image">
+            <img src="<%= campground.image %>" alt="<%= campground.name %>">
+            <span class="card-title">
+              <%= campground.name %>
+            </span>
+          </div>
+          <div class="card-content">
+            <span class="right-align">
+              <h5>$9.00/night</h5>
+            </span>
+            <p>
+              <%= campground.description %>
+            </p>
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col s12 m9 push-m3">
+
+
+        <div class="card grey lighten-4">
+          <div class="card-content right-align">
+            <a class="waves-effect waves-light btn right-align" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content">
+
+            <% campground.comments.forEach(comment => { %>
+              <div class="row">
+                <div class="col s12 m12">
+                  <strong>
+                    <%= comment.author %>
+                  </strong>
+                  <span class="right">10 days ago</span>
+                  <p>
+                    <%= comment.text %>
+                  </p>
+                </div>
+              </div>
+
+
+              <% }) %>
+
+          </div>
+
+        </div>
+
+      </div>
 
     </div>
 
