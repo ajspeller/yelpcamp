@@ -28,11 +28,17 @@ router.get('/:id', (req, res, next) => {
     .populate("comments")
     .exec()
     .then(campground => {
+      if (!campground) {
+        throw new Error('Campground not found!')
+      }
       res.render('campgrounds/show', {
         campground
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      req.flash('error', 'Campground not found!');
+      res.redirect('back');
+    });
 });
 
 // CREATE NEW CAMPGROUND ROUTE
