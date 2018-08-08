@@ -27,7 +27,8 @@
           </div>
           <div class="card-content">
             <span class="right-align">
-              <h5>$<%= campground.price %>/night</h5>
+              <h5>$
+                <%= campground.price %>/night</h5>
             </span>
             <p>
               <%= campground.description %>
@@ -39,19 +40,20 @@
               <em>
                 <%= campground.author.username %>
               </em>
-            </strong>
+            </strong>,
+            <%= moment(campground.createdAt).fromNow() %>
 
-            <% if (currentUser && campground.author.id.equals(currentUser._id)) { %>
-              <div class="divider"></div>
+              <% if (currentUser && campground.author.id.equals(currentUser._id)) { %>
+                <div class="divider"></div>
 
-              <div class="action-btns">
-                <form id="deleteCampground" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
-                  <button class="waves-effect waves-light btn-small red darken-4 right-align">Delete</button>
-                </form>
-                <a class="waves-effect waves-light btn-small light-blue accent-2 right-align" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
-              </div>
+                <div class="action-btns">
+                  <form id="deleteCampground" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
+                    <button class="waves-effect waves-light btn-small red darken-4 right-align">Delete</button>
+                  </form>
+                  <a class="waves-effect waves-light btn-small light-blue accent-2 right-align" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                </div>
 
-              <% } %>
+                <% } %>
 
           </div>
 
@@ -80,7 +82,9 @@
                   <strong>
                     <%= comment.author.username %>
                   </strong>
-                  <span class="right">10 days ago</span>
+                  <span class="right">
+                    <%= moment(comment.createdAt).fromNow() %>
+                  </span>
                   <p>
                     <%= comment.text %>
                   </p>

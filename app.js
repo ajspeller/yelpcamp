@@ -5,6 +5,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
+const moment = require('moment');
 const User = require('./models/user');
 
 const campgroundRoutes = require('./routes/campgrounds');
@@ -31,6 +32,8 @@ app.use(require('express-session')({
   resave: false,
   saveUninitialized: false
 }));
+
+app.locals.moment = moment;
 
 app.use(passport.initialize());
 app.use(passport.session());
