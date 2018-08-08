@@ -1,14 +1,35 @@
-<% include partials/header %>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="container">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+  <link rel="stylesheet" href="/stylesheets/landing.css">
+  <title>Yelp Camp</title>
+</head>
 
-  
-  <h1>Landing Page</h1>
-  
-  <p>Welcome to YelpCamp!</p>
-  
-  <a href="/campgrounds">View All Campgrounds</a>
-  
+<body>
+
+  <div class="container">
+
+    <div id="landing-header">
+      <h1>Welcome to YelpCamp!</h1>
+      <a href="/campgrounds" class="btn btn-lg btn-success">View All Campgrounds</a>
+    </div>
+
+    <ul class="slideshow">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+
+  </div>
+
   <% include partials/footer %>
-
-</div>

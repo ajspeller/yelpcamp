@@ -21,6 +21,10 @@
           <div class="input-field">
             <input required type="text" name="campground[description]" placeholder="Description">
           </div>
+
+          <div class="input-field">
+            <input required type="number" min="0.01" step="0.01" max="999999" name="campground[price]" placeholder="Price">
+          </div>
           
           <button class="waves-effect waves-light btn">Add Campground</button>
         </form>

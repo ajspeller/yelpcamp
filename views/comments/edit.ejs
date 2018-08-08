@@ -1,0 +1,34 @@
+<% include ../partials/header %>
+
+  <div class="container">
+
+    <div class="row">
+
+      <h2 class="center-align">Edit Comment
+      </h2>
+
+      <div style="width: 80%; margin: 50px auto;">
+
+
+        <form method="post" action="/campgrounds/<%= campground_id %>/comments/<%= comment._id%>?_method=PUT">
+
+          <div class="input-field">
+            <input value="<%= comment.text %>" required type="text" name="comment[text]" placeholder="Comment Text">
+          </div>
+
+          <button class="waves-effect waves-light btn">Edit Comment</button>
+
+        </form>
+
+        <div>
+          <a href="/campgrounds/<%= campground_id %>">Go Back</a>
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+  <% include ../partials/footer %>

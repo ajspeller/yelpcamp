@@ -10,15 +10,13 @@
 
 
         <form method="post" action="/campgrounds/<%= campground._id %>/comments">
+
           <div class="input-field">
             <input required type="text" name="comment[text]" placeholder="Comment Text">
           </div>
 
-          <div class="input-field">
-            <input required type="text" name="comment[author]" placeholder="Author Name">
-          </div>
-          
           <button class="waves-effect waves-light btn">Add Comment</button>
+          
         </form>
 
         <div>

@@ -1,14 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Campground = require('./models/campground');
-const Comment = require('./models/comment');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const methodOverride = require('method-override');
+const flash = require('connect-flash');
 const User = require('./models/user');
-const seedDB = require('./seeds');
 
-seedDB();
+const campgroundRoutes = require('./routes/campgrounds');
+const commentRoutes = require('./routes/comments');
+const authRoutes = require('./routes/auth');
 
-mongoose.connect('mongodb://ajspeller:ajspeller1@ds021299.mlab.com:21299/ajs-yelpcamp', {
+mongoose.connect(process.env.YELPCAMP_DATABASEURL, {
     useNewUrlParser: true
   })
   .then(() => console.log('Database connections successful'))
@@ -19,88 +22,39 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+app.use(methodOverride('_method'));
+app.use(flash());
+
+// PASSPORT CONFIGURATION
+app.use(require('express-session')({
+  secret: process.env.DEV_SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.get('/', (req, res, next) => {
-  res.render('landing');
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
+  next();
 });
 
-app.get('/campgrounds', (req, res, next) => {
-
-  Campground.find({})
-    .then(campgrounds => {
-      res.render('campgrounds/index', {
-        campgrounds
-      });
-    }).catch(err => {
-      console.log(err);
-    });
-
-});
-
-app.get('/campgrounds/new', (req, res, next) => {
-  res.render('campgrounds/new');
-});
-
-app.get('/campgrounds/:id', (req, res, next) => {
-  const id = req.params.id;
-  Campground
-    .findById(id)
-    .populate("comments")
-    .exec()
-    .then(campground => {
-      res.render('campgrounds/show', {
-        campground
-      });
-    })
-    .catch(err => console.log(err));
-});
-
-app.post('/campgrounds', (req, res, next) => {
-  Campground.create(req.body.campground)
-    .then(campground => {
-      res.redirect('/campgrounds');
-    }).catch(err => {
-      console.log(err);
-    });
-});
-
-// =====================
-// COMMENTS ROUTES
-// =====================
-
-app.get('/campgrounds/:id/comments/new', (req, res, next) => {
-  Campground
-    .findById(req.params.id)
-    .then(campground => res.render('comments/new', {
-      campground
-    }))
-    .catch(err => console.log(err));
-});
-
-app.post('/campgrounds/:id/comments', (req, res, next) => {
-  let foundCampground;
-  Campground
-    .findById(req.params.id)
-    .then(campground => {
-      foundCampground = campground;
-      return Comment.create(req.body.comment);
-    })
-    .then(comment => {
-      foundCampground.comments.push(comment);
-      foundCampground.save();
-      res.redirect(`/campgrounds/${foundCampground._id}`);
-    })
-    .catch(err => {
-      console.log(err);
-      res.redirect('/campgrounds');
-    });
-});
+app.use('/campgrounds', campgroundRoutes);
+app.use('/campgrounds/:id/comments', commentRoutes);
+app.use('/', authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT} ...`);
-})
+});

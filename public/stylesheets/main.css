@@ -1,0 +1,11 @@
+#deleteCampground {
+  display: inline;
+}
+
+#deleteComment {
+  display: inline;
+}
+
+.action-btns {
+  margin-top: 10px;
+}
