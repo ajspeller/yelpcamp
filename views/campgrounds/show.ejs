@@ -27,11 +27,32 @@
           </div>
           <div class="card-content">
             <span class="right-align">
-              <h5>$9.00/night</h5>
+              <h5>$<%= campground.price %>/night</h5>
             </span>
             <p>
               <%= campground.description %>
             </p>
+
+            <br>
+            <strong>
+              Site Submitted By:
+              <em>
+                <%= campground.author.username %>
+              </em>
+            </strong>
+
+            <% if (currentUser && campground.author.id.equals(currentUser._id)) { %>
+              <div class="divider"></div>
+
+              <div class="action-btns">
+                <form id="deleteCampground" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
+                  <button class="waves-effect waves-light btn-small red darken-4 right-align">Delete</button>
+                </form>
+                <a class="waves-effect waves-light btn-small light-blue accent-2 right-align" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+              </div>
+
+              <% } %>
+
           </div>
 
         </div>
@@ -57,15 +78,27 @@
               <div class="row">
                 <div class="col s12 m12">
                   <strong>
-                    <%= comment.author %>
+                    <%= comment.author.username %>
                   </strong>
                   <span class="right">10 days ago</span>
                   <p>
                     <%= comment.text %>
                   </p>
+
+                  <% if (currentUser && comment.author.id.equals(currentUser._id)) { %>
+                    <span class="right">
+
+                      <form id="deleteComment" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
+                        <button class="waves-effect waves-light btn-small red darken-4 right-align">Delete</button>
+                      </form>
+                      <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="waves-effect waves-light btn-small light-blue accent-2 right-align">Edit</a>
+
+                    </span>
+                    <% } %>
+
                 </div>
               </div>
-
+              <div class="divider"></div>
 
               <% }) %>
 
