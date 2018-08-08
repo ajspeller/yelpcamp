@@ -6,16 +6,24 @@ const Campground = require('../models/campground');
 const Comment = require('../models/comment');
 const middleware = require('../middleware');
 
-router.get('/new', middleware.isLoggedIn, (req, res, next) => {
+router.get('/new', middleware.isLoggedIn, (req, res) => {
   Campground
     .findById(req.params.id)
-    .then(campground => res.render('comments/new', {
-      campground
-    }))
-    .catch(err => console.log(err));
+    .then(campground => {
+      if (!campground) {
+        throw new Error('Campground not found!');
+      }
+      res.render('comments/new', {
+        campground
+      });
+    })
+    .catch(err => {
+      req.flash('error', 'Campground not found!');
+      res.redirect('back');
+    });
 });
 
-router.post('/', middleware.isLoggedIn, (req, res, next) => {
+router.post('/', middleware.isLoggedIn, (req, res) => {
   let foundCampground;
   Campground
     .findById(req.params.id)
@@ -41,15 +49,24 @@ router.post('/', middleware.isLoggedIn, (req, res, next) => {
 });
 
 router.get('/:comment_id/edit', middleware.checkCommentOwnership, (req, res) => {
-
-  Comment.findById(req.params.comment_id)
-    .then(foundComment => {
-      res.render('comments/edit', {
-        campground_id: req.params.id,
-        comment: foundComment
-      });
+  Campground.findById(req.params.id)
+    .then(foundCampground => {
+      if (!foundCampground) {
+        throw new Error('Campground not found!');
+      }
+      Comment.findById(req.params.comment_id)
+        .then(foundComment => {
+          res.render('comments/edit', {
+            campground_id: req.params.id,
+            comment: foundComment
+          });
+        })
+        .catch(err => {
+          res.redirect('back');
+        });
     })
     .catch(err => {
+      req.flash('error', 'Campground not found!');
       res.redirect('back');
     });
 });

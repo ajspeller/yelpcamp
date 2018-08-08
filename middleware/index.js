@@ -7,6 +7,9 @@ middlewareObj.checkCampgroundOwnership = (req, res, next) => {
   if (req.isAuthenticated()) {
     Campground.findById(req.params.id)
       .then(foundCampground => {
+        if (!foundCampground) {
+          throw new Error('Campground not found!');
+        }
         if (foundCampground.author.id.equals(req.user._id)) {
           next();
         } else {
@@ -44,6 +47,7 @@ middlewareObj.checkCommentOwnership = (req, res, next) => {
     res.redirect('back');
   }
 }
+
 middlewareObj.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
