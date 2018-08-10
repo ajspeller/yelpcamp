@@ -14,67 +14,128 @@
 </head>
 
 <body>
-  <nav>
-    <div class="nav-wrapper">
-      <a href="/" class="brand-logo">YelpCamp</a>
-      <ul class="right hide-on-med-and-down">
-        <% if(!currentUser) { %>
-          <li>
-            <a href="/login">Login</a>
-          </li>
-          <li>
-            <a href="/register">Register</a>
-          </li>
-          <% } else { %>
-            <!-- Dropdown Trigger -->
-            <li>
-              <a class="dropdown-trigger" href="#" data-target="dropdown1">
-                <%= currentUser.username %>
-                  <i class="material-icons right">arrow_drop_down</i>
-              </a>
-            </li>
-            <% } %>
-      </ul>
-    </div>
-  </nav>
-  <!-- Dropdown Structure -->
-  <% if(currentUser) { %>
-    <ul id="dropdown1" class="dropdown-content">
-      <li>
-        <a href="#!">Profile</a>
-      </li>
-      <li class="divider"></li>
-      <li>
-        <a href="/logout">Logout</a>
-      </li>
-    </ul>
-    <% } %>
-
+  <div class="navbar-fixed">
+    <nav class="blue">
       <div class="container">
-        <% if (error && error.length > 0) { %>
+        <div class="nav-wrapper">
+          <a href="/" class="brand-logo">YelpCamp</a>
+          <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+            <i class="material-icons">menu</i>
+          </a>
+          </a>
+          <ul class="right hide-on-med-and-down">
+            <% if(!currentUser) { %>
+              <li>
+                <a href="/login">Login</a>
+              </li>
+              <li>
+                <a href="/register">Register</a>
+              </li>
+              <% } else { %>
+                <!-- Dropdown Trigger -->
+                <li>
+                  <a class="dropdown-trigger" href="#" data-target="dropdown1">
+                    <%= currentUser.username %>
+                      <i class="material-icons right">arrow_drop_down</i>
+                  </a>
+                </li>
+                <% } %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Sidenav Structure -->
+  <ul class="sidenav" id="mobile-nav">
+    <p>
+      <strong>Welcome to YelpCamp</strong>
+    </p>
+    <li>
+      <div class="divider"></div>
+    </li>
+    <% if(!currentUser) { %>
+      <li>
+        <a href="/login">Login</a>
+      </li>
+      <li>
+        <a href="/register">Register</a>
+      </li>
+      <% } else { %>
+        <!-- Dropdown Trigger -->
+        <li>
+          <div class="user-view">
+            <div class="background">
+              <img src="images/office.jpg">
+            </div>
+            <a href="#user">
+              <img class="circle" src="images/yuna.jpg">
+            </a>
+            <span class="blue-text name">
+              <%= currentUser.username %>
+            </span>
+            <a href="#email">
+              <span class="white-text email">jdandturk@gmail.com</span>
+            </a>
+          </div>
+        </li>
+        <li>
+          <a class="dropdown-trigger" href="#" data-target="dropdown2">
+            <%= currentUser.username %>
+              <i class="material-icons right">arrow_drop_down</i>
+          </a>
+        </li>
+
+        <% } %>
+  </ul>
+
+  <!-- Dropdown Structure -->
+  <ul id="dropdown1" class="dropdown-content">
+    <li>
+      <a href="#!">Profile</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="/logout">Logout</a>
+    </li>
+  </ul>
+
+  <!-- Dropdown Structure -->
+  <ul id="dropdown2" class="dropdown-content">
+    <li>
+      <a href="#!">Profile</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="/logout">Logout</a>
+    </li>
+  </ul>
+
+  <div class="container">
+    <% if (error && error.length > 0) { %>
+      <div class="row">
+        <div class="col s12 m12 l12">
+          <div class="card-panel red lighten-5">
+            <span class="red-text darken-4">
+              <strong>
+                <%= error %>
+              </strong>
+            </span>
+          </div>
+        </div>
+      </div>
+      <% } %>
+        <% if (success && success.length > 0) { %>
           <div class="row">
             <div class="col s12 m12 l12">
-              <div class="card-panel red lighten-5">
-                <span class="red-text darken-4">
+              <div class="card-panel teal lighten-5">
+                <span class="teal-text darken-4">
                   <strong>
-                    <%= error %>
+                    <%= success %>
                   </strong>
                 </span>
               </div>
             </div>
           </div>
           <% } %>
-            <% if (success && success.length > 0) { %>
-              <div class="row">
-                <div class="col s12 m12 l12">
-                  <div class="card-panel teal lighten-5">
-                    <span class="teal-text darken-4">
-                      <strong>
-                        <%= success %>
-                      </strong>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <% } %>
-      </div>
+  </div>
