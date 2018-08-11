@@ -15,35 +15,39 @@
 
 <body>
   <div class="navbar-fixed">
-    <nav class="blue">
-      <div class="container">
-        <div class="nav-wrapper">
-          <a href="/" class="brand-logo">YelpCamp</a>
-          <a href="#" data-target="mobile-nav" class="sidenav-trigger">
-            <i class="material-icons">menu</i>
-          </a>
-          </a>
-          <ul class="right hide-on-med-and-down">
-            <% if(!currentUser) { %>
-              <li>
-                <a href="/login">Login</a>
-              </li>
-              <li>
-                <a href="/register">Register</a>
-              </li>
-              <% } else { %>
-                <!-- Dropdown Trigger -->
-                <li>
-                  <a class="dropdown-trigger" href="#" data-target="dropdown1">
-                    <%= currentUser.username %>
-                      <i class="material-icons right">arrow_drop_down</i>
+    <% if (currentUser && currentUser.isAdmin) { %>
+      <nav class="yellow">
+        <% } else { %>
+          <nav class="blue">
+            <% } %>
+              <div class="container">
+                <div class="nav-wrapper">
+                  <a href="/" class="brand-logo">YelpCamp</a>
+                  <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                    <i class="material-icons">menu</i>
                   </a>
-                </li>
-                <% } %>
-          </ul>
-        </div>
-      </div>
-    </nav>
+                  </a>
+                  <ul class="right hide-on-med-and-down">
+                    <% if(!currentUser) { %>
+                      <li>
+                        <a href="/login">Login</a>
+                      </li>
+                      <li>
+                        <a href="/register">Register</a>
+                      </li>
+                      <% } else { %>
+                        <!-- Dropdown Trigger -->
+                        <li>
+                          <a class="dropdown-trigger" href="#" data-target="dropdown1">
+                            <%= currentUser.username %>
+                              <i class="material-icons right">arrow_drop_down</i>
+                          </a>
+                        </li>
+                        <% } %>
+                  </ul>
+                </div>
+              </div>
+          </nav>
   </div>
 
   <!-- Sidenav Structure -->

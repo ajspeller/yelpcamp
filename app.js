@@ -28,7 +28,7 @@ app.use(flash());
 
 // PASSPORT CONFIGURATION
 app.use(require('express-session')({
-  secret: process.env.DEV_SESSION_SECRET,
+  secret: process.env.YELPCAMP_SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
