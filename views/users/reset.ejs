@@ -1,0 +1,22 @@
+<% include ../partials/header %>
+
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col s12 m12 l12 x12">
+
+        <form action="/reset/<%= token %>" method="post">
+          <legend>Reset Password</legend>
+          <input type="password" name="password" placeholder="Password" autofocus>
+          <input type="password" name="confirm" placeholder="Confirm" value="Reset Password">
+          <button class="waves-effect waves-light btn">Update Password</button>
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <% include ../partials/footer %>
