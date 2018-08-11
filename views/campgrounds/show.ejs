@@ -37,9 +37,12 @@
             <br>
             <strong>
               Site Submitted By:
-              <em>
-                <%= campground.author.username %>
-              </em>
+              <a href="/users/<%= campground.author.id %>">
+                <em>
+                  <%= campground.author.username %>
+                </em>
+              </a>
+
             </strong>,
             <%= moment(campground.createdAt).fromNow() %>
 

@@ -1,6 +1,7 @@
 const passport = require('passport');
 const express = require('express');
 const User = require('../models/user');
+const Campground = require('../models/campground');
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
@@ -15,6 +16,10 @@ router.get('/register', (req, res) => {
 router.post('/register', (req, res) => {
   const newUser = new User({
     username: req.body.username,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.email,
+    avatar: req.body.avatar,
     isAdmin: req.body.adminCode === process.env.YELPCAMP_ADMINCODE ? true : false
   });
   User.register(newUser, req.body.password, (err, user) => {
@@ -47,6 +52,28 @@ router.get('/logout', (req, res) => {
   req.logout();
   req.flash("success", "Logged you out!");
   res.redirect('/campgrounds');
+});
+
+// PROFILE
+router.get('/users/:id', (req, res) => {
+  User.findById(req.params.id)
+    .then(foundUser => {
+      Campground
+        .find()
+        .where('author.id')
+        .equals(foundUser._id)
+        .exec()
+        .then(campgrounds => {
+          res.render('users/show', {
+            user: foundUser,
+            campgrounds: campgrounds
+          });
+        });
+    })
+    .catch(err => {
+      req.flash("error", "Unable to retrieve user profile");
+      res.redirect('/');
+    });
 });
 
 module.exports = router;
