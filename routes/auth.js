@@ -14,8 +14,9 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res) => {
   const newUser = new User({
-    username: req.body.username
-  })
+    username: req.body.username,
+    isAdmin: req.body.adminCode === process.env.YELPCAMP_ADMINCODE ? true : false
+  });
   User.register(newUser, req.body.password, (err, user) => {
     if (err) {
       return res.render('register', {
