@@ -9,6 +9,9 @@ const CampgroundSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  imageId: {
+    type: String
+  },
   description: {
     type: String,
     required: true

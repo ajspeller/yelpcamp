@@ -11,14 +11,14 @@
       <div style="width: 80%; margin: 50px auto;">
 
 
-        <form method="post" action="/campgrounds/<%= campground._id %>?_method=PUT">
+        <form method="post" action="/campgrounds/<%= campground._id %>?_method=PUT" enctype="multipart/form-data">
           <div class="input-field">
             <input value="<%= campground.name %>" required type="text" name="campground[name]" placeholder="New Campground">
             <label for="campground[name]">First Name</label>
           </div>
 
           <div class="input-field">
-            <input value="<%= campground.image %>" required type="text" name="campground[image]" placeholder="Image URL">
+            <input type="file" id="campground[image]" name="campground[image]" accept="image/*">
           </div>
 
           <div class="input-field">

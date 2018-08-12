@@ -4,18 +4,18 @@
 
     <div class="row">
 
-      <h2 class="center-align"> Create New Campground</h2>
+      <h2 class="center-align">Create New Campground</h2>
 
       <div style="width: 80%; margin: 50px auto;">
 
 
-        <form method="post" action="/campgrounds">
+        <form method="post" action="/campgrounds" enctype="multipart/form-data">
           <div class="input-field">
             <input required type="text" name="campground[name]" placeholder="New Campground">
           </div>
 
           <div class="input-field">
-            <input required type="text" name="campground[image]" placeholder="Image URL">
+            <input required type="file" id="campground[image]" name="campground[image]" placeholder="Image URL" accept="image/*" required>
           </div>
 
           <div class="input-field">
