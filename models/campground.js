@@ -13,6 +13,15 @@ const CampgroundSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  location: {
+    type: String
+  },
+  lat: {
+    type: Number
+  },
+  lng: {
+    type: Number
+  },
   price: {
     type: String
   },
