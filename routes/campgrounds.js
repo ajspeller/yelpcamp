@@ -22,7 +22,8 @@ router.get('/', (req, res) => {
         currentUser: req.user
       });
     }).catch(err => {
-      console.log(err);
+      req.flash('error', 'Error retrieving campground');
+      res.redirect('back');
     });
 
 });
@@ -46,14 +47,14 @@ router.get('/:id', (req, res, next) => {
       });
     })
     .catch(err => {
-      req.flash('error', 'Campground not found!');
+      req.flash('error', 'Error retrieving campground');
       res.redirect('back');
     });
 });
 
 // CREATE NEW CAMPGROUND ROUTE
 router.post('/', middleware.isLoggedIn, (req, res) => {
-  let newCampground = req.body.campground;
+  const newCampground = req.body.campground;
   newCampground.author = {
     id: req.user._id,
     username: req.user.username
@@ -65,21 +66,17 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
         req.flash('error', 'Invalid address');
         return res.redirect('back');
       }
-      const lat = data[0].latitude;
-      const lng = data[0].longitude;
-      const location = data[0].formattedAddress;
-      const newCG = {
-        ...newCampground,
-        location,
-        lat,
-        lng
-      };
-      console.log(newCG);
-      Campground.create(newCG)
+      newCampground.lat = data[0].latitude;
+      newCampground.lng = data[0].longitude;
+      newCampground.location = data[0].formattedAddress;
+
+      Campground.create(newCampground)
         .then(campground => {
           res.redirect('/campgrounds');
         }).catch(err => {
           console.log(err);
+          req.flash('error', 'Error creating new campground');
+          return res.redirect('back');
         });
     })
     .catch(err => {
@@ -106,7 +103,7 @@ router.get('/:id/edit', middleware.checkCampgroundOwnership, (req, res) => {
 router.put('/:id', middleware.checkCampgroundOwnership, (req, res) => {
 
 
-  let newCampground = req.body.campground;
+  const newCampground = req.body.campground;
   newCampground.author = {
     id: req.user._id,
     username: req.user.username
@@ -118,18 +115,12 @@ router.put('/:id', middleware.checkCampgroundOwnership, (req, res) => {
         req.flash('error', 'Invalid address');
         return res.redirect('back');
       }
-      const lat = data[0].latitude;
-      const lng = data[0].longitude;
-      const location = data[0].formattedAddress;
-      const newCG = {
-        ...newCampground,
-        location,
-        lat,
-        lng
-      };
+      newCampground.lat = data[0].latitude;
+      newCampground.lng = data[0].longitude;
+      newCampground.location = data[0].formattedAddress;
 
       // find and update then redirect
-      Campground.findByIdAndUpdate(req.params.id, newCG, (err, updatedCampground) => {
+      Campground.findByIdAndUpdate(req.params.id, newCampground, (err, updatedCampground) => {
         if (err) {
           req.flash('error', err.message);
           res.redirect('/campgrounds');
@@ -146,7 +137,6 @@ router.put('/:id', middleware.checkCampgroundOwnership, (req, res) => {
 });
 
 // DELETE A CAMPGROUND ROUTE
-
 router.delete('/:id', middleware.checkCampgroundOwnership, (req, res) => {
   Campground.findByIdAndRemove(req.params.id)
     .then(campground => {
