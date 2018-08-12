@@ -67,6 +67,10 @@ router.get('/users/:id', (req, res) => {
         .equals(foundUser._id)
         .exec()
         .then(campgrounds => {
+
+          console.log(foundUser);
+          console.log(res.locals.currentUser);
+
           res.render('users/show', {
             user: foundUser,
             campgrounds: campgrounds
@@ -222,5 +226,43 @@ router.post('/reset/:token', (req, res) => {
     res.redirect('/campgrounds');
   });
 });
+
+// EDIT PROFILE
+router.get('/users/:id/edit', /* middleware.checkProfileOwnership, */ (req, res) => {
+  // Campground.findById(req.params.id)
+  //   .then(foundCampground => {
+  //     res.render('campgrounds/edit', {
+  //       campground: foundCampground
+  //     });
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //     res.redirect('/campgrounds');
+  //   });
+  User.findById(req.params.id)
+    .then(user => {
+      res.render('users/edit', {
+        user
+      });
+    })
+    .catch(err => {})
+});
+
+// UPDATE PROFILE
+router.put('/users/:id', /* middleware.checkCommentOwnership, */ (req, res) => {
+
+  console.log(req.user);
+  console.log()
+
+  User.findByIdAndUpdate(req.params.id, req.body.user, (err, updatedUser) => {
+    if (err) {
+      req.flash('success', 'User profile updated');
+      res.redirect('back');
+    } else {
+      res.redirect(`/users/${req.params.id}`);
+    }
+  });
+});
+
 
 module.exports = router;

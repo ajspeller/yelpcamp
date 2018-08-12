@@ -1,0 +1,26 @@
+<% include ../partials/header %>
+
+  <div class="container">
+    <div class="row">
+
+      <h1>Edit Profile</h1>
+
+      <form action="/users/<%= user.id %>?_method=PUT" method="post">
+        <input type="text" name="user[username]" placeholder="Username" value="<%= user.username %>" disabled>
+        <input type="text" name="user[firstname]" placeholder="First Name" value="<%= user.firstname %>">
+        <input type="text" name="user[lastname]" placeholder="Last Name" value="<%= user.lastname %>">
+        <input type="email" name="user[email]" placeholder="Email" required value="<%= user.email %>">
+        <input type="url" name="user[avatar]" placeholder="Avatar URL" value="<%= user.avatar %>">
+        <!-- <input type="password" name="password" placeholder="Password" required> -->
+        <!-- <input type="password" name="confirm" placeholder="Confirm Password" required> -->
+        Enter Admin Code for elevated priveledges
+        <input type="password" name="user[adminCode]" placeholder="Admin Code">
+        <button class="waves-effect waves-light btn">Update Profile</button>
+      </form>
+
+    </div>
+  </div>
+
+  <%= user %>
+
+    <% include ../partials/footer %>

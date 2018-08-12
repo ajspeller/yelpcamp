@@ -56,7 +56,7 @@ router.get('/', (req, res) => {
     .then(campgrounds => {
       res.render('campgrounds/index', {
         campgrounds,
-        currentUser: req.user,
+        // currentUser: req.user,
         search: req.query.search
       });
     }).catch(err => {
