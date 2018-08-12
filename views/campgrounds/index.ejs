@@ -3,42 +3,65 @@
   <div class="container">
 
     <header>
-      <h1>Wecome to YelpCamp</h1>
+      <h1>Welcome to YelpCamp</h1>
       <p>View our hand-picked campgrounds from all over the world</p>
       <p>
         <a class="waves-effect waves-light btn-large" href="/campgrounds/new">Add New Campground</a>
       </p>
+      <p>
+        <form action="/campgrounds" method="get">
+          <div>
+            <input type="search" name="search" placeholder="Campground search ..." value="<%= search %>">
+            <button class="waves-effect waves-light btn-small">Search</button>
+          </div>
+        </form>
+      </p>
     </header>
 
-    <div class="row">
-      <div class="col l12">
-        <h3 class="center-align">
-          Our Most Popular Campgrounds
-        </h3>
-      </div>
-    </div>
-    <!-- style="display: flex; flex-wrap: wrap;"-->
-    <div class="row">
-      <div class="col l12">
+    <% if (campgrounds.length > 0) { %>
 
-        <% campgrounds.forEach(campground => { %>
-          <div class="col s12 m3 s6">
-            <div class="card">
-              <img class="responsive-img" src="<%= campground.image %>">
-              <div class="card-content">
-                <p class="flow-text center-align">
-                  <%= campground.name %>
-                </p>
-              </div>
-              <div class="card-action center-align">
-                <a href="/campgrounds/<%= campground._id %>" class="waves-effect waves-light btn-small">More Info</a>
-              </div>
+      <div class="row">
+        <div class="col l12">
+          <h3 class="center-align">
+            Our Most Popular Campgrounds
+          </h3>
+        </div>
+      </div>
+
+      <% } else { %>
+
+        <div class="row">
+          <div class="col l12">
+            <h3 class="center-align">
+              No campgrounds match that query!
+            </h3>
+          </div>
+        </div>
+
+        <% } %>
+
+          <!-- style="display: flex; flex-wrap: wrap;"-->
+          <div class="row">
+            <div class="col l12">
+
+              <% campgrounds.forEach(campground => { %>
+                <div class="col s12 m3 s6">
+                  <div class="card">
+                    <img class="responsive-img" src="<%= campground.image %>">
+                    <div class="card-content">
+                      <p class="flow-text center-align">
+                        <%= campground.name %>
+                      </p>
+                    </div>
+                    <div class="card-action center-align">
+                      <a href="/campgrounds/<%= campground._id %>" class="waves-effect waves-light btn-small">More Info</a>
+                    </div>
+                  </div>
+                </div>
+                <% }) %>
+
             </div>
           </div>
-          <% }) %>
-
-      </div>
-    </div>
 
   </div>
 

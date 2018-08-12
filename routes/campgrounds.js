@@ -40,14 +40,24 @@ cloudinary.config({
 });
 
 
-
+// SHOW ALL CAMPGROUNDS
 router.get('/', (req, res) => {
+  let query;
+  if (req.query.search) {
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    query = {
+      "name": regex
+    };
+  } else {
+    query = {}
+  }
 
-  Campground.find({})
+  Campground.find(query)
     .then(campgrounds => {
       res.render('campgrounds/index', {
         campgrounds,
-        currentUser: req.user
+        currentUser: req.user,
+        search: req.query.search
       });
     }).catch(err => {
       req.flash('error', 'Error retrieving campground');
@@ -208,14 +218,19 @@ router.put('/:id', middleware.checkCampgroundOwnership, upload.single('campgroun
 router.delete('/:id', middleware.checkCampgroundOwnership, async (req, res) => {
 
   try {
-    const campground = await Campground.findByIdAndRemove(req.params.id)
-    await cloudinary.v2.uploader.destroy(campground.imageId)
+    const campground = await Campground.findByIdAndRemove(req.params.id);
+    await cloudinary.v2.uploader.destroy(campground.imageId);
     req.flash('success', 'Success, campground deleted!');
     return res.redirect('/campgrounds');
-  } catch(err) {
+  } catch (err) {
     req.flash('error', err.message);
     return res.redirect('/campgrounds');
   }
+
 });
+
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;
