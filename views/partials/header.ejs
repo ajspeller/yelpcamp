@@ -70,16 +70,13 @@
         <li>
           <div class="user-view">
             <div class="background">
-              <img src="images/office.jpg">
+              <img src="https://images.unsplash.com/photo-1498429089284-41f8cf3ffd39?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=91f0fc08cef6f3bfbb32b3adf0065f39&auto=format&fit=crop&w=1350&q=80">
             </div>
             <a href="#user">
-              <img class="circle" src="images/yuna.jpg">
+              <img class="circle" src="<%= currentUser.avatar %>">
             </a>
-            <span class="blue-text name">
-              <%= currentUser.username %>
-            </span>
             <a href="#email">
-              <span class="white-text email">jdandturk@gmail.com</span>
+              <span class="white-text email"><%= currentUser.email %></span>
             </a>
           </div>
         </li>
