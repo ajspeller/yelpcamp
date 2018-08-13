@@ -1,40 +1,46 @@
 <% include ../partials/header %>
 
+
   <div class="container">
 
     <div class="row">
 
-      <h2 class="center-align">Create New Campground</h2>
+      <h5 class="center-align">Create New Campground</h5>
 
       <div style="width: 80%; margin: 50px auto;">
 
-
         <form method="post" action="/campgrounds" enctype="multipart/form-data">
           <div class="input-field">
-            <input required type="text" name="campground[name]" placeholder="New Campground">
+            <input required type="text" name="campground[name]" autofocus>
+            <label for="campground[name]">New Campground</label>
+          </div>
+
+          <div>
+            <input style="display: none" required type="file" id="campground[image]" name="campground[image]" accept="image/*" required>
+            <label for="campground[image]" class="waves-effect waves-light btn">Select Avatar Image</label>
           </div>
 
           <div class="input-field">
-            <input required type="file" id="campground[image]" name="campground[image]" placeholder="Image URL" accept="image/*" required>
+            <input required type="text" name="campground[description]">
+            <label for="campground[description]">Description</label>
           </div>
 
           <div class="input-field">
-            <input required type="text" name="campground[description]" placeholder="Description">
+            <input required type="number" min="0.01" step="0.01" max="999999" name="campground[price]">
+            <label for="campground[price]">Price</label>
           </div>
 
           <div class="input-field">
-            <input required type="number" min="0.01" step="0.01" max="999999" name="campground[price]" placeholder="Price">
-          </div>
-
-          <div class="input-field">
-            <input required type="text" name="campground[location]" placeholder="Location">
+            <input required type="text" name="campground[location]">
+            <label for="campground[location]">Location</label>
           </div>
 
           <button class="waves-effect waves-light btn">Add Campground</button>
         </form>
 
         <div>
-          <a href="/campgrounds">Go Back</a>
+          <br>
+          <a href="/campgrounds">Back to campgrounds</a>
         </div>
 
       </div>
@@ -43,5 +49,6 @@
     </div>
 
   </div>
+
 
   <% include ../partials/footer %>

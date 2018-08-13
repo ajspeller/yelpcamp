@@ -9,10 +9,21 @@
       coverTrigger: false
     });
 
+    M.Slider.init(document.querySelectorAll('.slider'), {
+      height: 500,
+      indicators: false,
+      transition: 500,
+      interval: 6000
+    });
+
+    M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
+
+    });
 
     // M.toast({
     //   html: 'testing'
     // });
+
 
   });
 </script>
