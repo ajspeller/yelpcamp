@@ -4,8 +4,8 @@
 
     <div class="row">
 
-      <h2 class="center-align">Edit Comment
-      </h2>
+      <h5 class="center-align">Edit Comment
+      </h5>
 
       <div style="width: 80%; margin: 50px auto;">
 
@@ -13,15 +13,16 @@
         <form method="post" action="/campgrounds/<%= campground_id %>/comments/<%= comment._id%>?_method=PUT">
 
           <div class="input-field">
-            <input value="<%= comment.text %>" required type="text" name="comment[text]" placeholder="Comment Text">
+            <input value="<%= comment.text %>" required type="text" name="comment[text]" autofocus>
+            <label for="comment[text]">Comment</label>
           </div>
 
           <button class="waves-effect waves-light btn">Edit Comment</button>
 
         </form>
-
+        <br>
         <div>
-          <a href="/campgrounds/<%= campground_id %>">Go Back</a>
+          <a href="/campgrounds/<%= campground_id %>">Go back</a>
         </div>
 
       </div>

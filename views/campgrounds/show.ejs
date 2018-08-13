@@ -4,10 +4,12 @@
 
     <div class="row">
 
+      <div class="col s12">
+        <br>
+        <a href="/campgrounds">Back to Campgrounds</a>
+      </div>
+
       <div class="col s12 m3">
-        <p class="flow-text">
-          Yelp Camp
-        </p>
         <div class="collection">
           <a href="#!" class="collection-item">Info 1</a>
           <a href="#!" class="collection-item active">Info 2</a>
@@ -44,7 +46,8 @@
                 </em>
               </a>
 
-            </strong>,
+            </strong>
+            <br />
             <%= moment(campground.createdAt).fromNow() %>
 
               <% if (currentUser && campground.author.id.equals(currentUser._id) || (currentUser && currentUser.isAdmin)) { %>
@@ -114,6 +117,9 @@
 
         </div>
 
+        <br />
+
+        <a href="/campgrounds">Back to Campgrounds</a>
       </div>
 
     </div>

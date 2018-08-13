@@ -1,29 +1,63 @@
 <% include ../partials/header %>
 
-  <div class="container">
+  <!-- section slider  -->
 
-    <header>
-      <h1>Welcome to YelpCamp</h1>
-      <p>View our hand-picked campgrounds from all over the world</p>
-      <p>
-        <a class="waves-effect waves-light btn-large" href="/campgrounds/new">Add New Campground</a>
-      </p>
-      <p>
-        <form action="/campgrounds" method="get">
-          <div>
-            <input type="search" name="search" placeholder="Campground search ..." value="<%= search %>">
+  <div class="slider">
+    <ul class="slides">
+      <li>
+        <img src="http://i.imgur.com/K3mPv14.jpg" alt="">
+        <div class="caption center-align">
+          <h1 class="light black-text text-lighten-3">YelpCamp</h>
+        </div>
+      </li>
+      <li>
+        <img src="http://i.imgur.com/2LSMCmJ.jpg" alt="">
+        <div class="caption left-align">
+          <h2>All Season</h2>
+          <h5 class="light grey-text text-lighten-3">
+            The adventure continues all year around!
+          </h5>
+        </div>
+      </li>
+      <li>
+        <img src="http://i.imgur.com/emvhOnb.jpg" alt="">
+        <div class="caption right-align">
+          <h2>Simple Life</h2>
+          <h5 class="light grey-text text-lighten-3">
+            Get back to the basics and relieve the stress of city life!
+          </h5>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- section search -->
+  <section class="section section-search blue lighten-1 white-text center">
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <h5>Search our hand-picked campgrounds from all over the world</h5>
+          <form action="/campgrounds" method="get">
+            <div class="input-field">
+              <input class="white lighten-1 black-text" type="search" name="search" value="<%= search %>">
+              <label for="search" class="black-text">Search</label>
+            </div>
             <button class="waves-effect waves-light btn-small">Search</button>
-          </div>
-        </form>
-      </p>
-    </header>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="container">
 
     <% if (campgrounds.length > 0) { %>
 
       <div class="row">
         <div class="col l12">
           <h3 class="center-align">
-            Our Most Popular Campgrounds
+            Popular Campgrounds
           </h3>
         </div>
       </div>
@@ -49,7 +83,7 @@
                   <div class="card">
                     <img class="responsive-img" src="<%= campground.image %>">
                     <div class="card-content">
-                      <p class="flow-text center-align">
+                      <p class="flow-text center-align truncate">
                         <%= campground.name %>
                       </p>
                     </div>

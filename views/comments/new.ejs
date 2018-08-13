@@ -4,7 +4,11 @@
 
     <div class="row">
 
-      <h2 class="center-align">Add New Comment to <%= campground.name %></h2>
+      <h5 class="center-align">Add Comment to
+        <strong class="teal-text">
+          <%= campground.name %>
+        </strong>
+      </h5>
 
       <div style="width: 80%; margin: 50px auto;">
 
@@ -12,15 +16,18 @@
         <form method="post" action="/campgrounds/<%= campground._id %>/comments">
 
           <div class="input-field">
-            <input required type="text" name="comment[text]" placeholder="Comment Text">
+            <input required type="text" name="comment[text]">
+            <label for="comment[text]">Comment</label>
           </div>
 
           <button class="waves-effect waves-light btn">Add Comment</button>
-          
+
         </form>
 
+        <br>
+
         <div>
-          <a href="/campgrounds/<%= campground._id %>">Go Back</a>
+          <a href="/campgrounds/<%= campground._id %>">Back to campgrounds</a>
         </div>
 
       </div>

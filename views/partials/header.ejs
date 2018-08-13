@@ -76,7 +76,9 @@
               <img class="circle" src="<%= currentUser.avatar %>">
             </a>
             <a href="#email">
-              <span class="white-text email"><%= currentUser.email %></span>
+              <span class="white-text email">
+                <%= currentUser.email %>
+              </span>
             </a>
           </div>
         </li>
@@ -143,4 +145,10 @@
             </div>
           </div>
           <% } %>
+  </div>
+
+  <div class="fixed-action-btn">
+    <a class="btn-floating waves-effect waves-light btn-large" href="/campgrounds/new">
+      <i class="large material-icons">add</i>
+    </a>
   </div>
