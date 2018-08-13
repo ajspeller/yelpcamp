@@ -17,6 +17,12 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
+
+  if (req.body.password !== req.body.confirm) {
+    req.flash('error', `The entered passwords do not match!`);
+    return res.redirect('/register');
+  }
+
   const newUser = new User({
     username: req.body.username,
     firstname: req.body.firstname,
