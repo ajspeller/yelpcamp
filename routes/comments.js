@@ -58,6 +58,7 @@ router.get('/:comment_id/edit', middleware.checkCommentOwnership, (req, res) => 
         .then(foundComment => {
           res.render('comments/edit', {
             campground_id: req.params.id,
+            campgroundName: foundCampground.name,
             comment: foundComment
           });
         })
