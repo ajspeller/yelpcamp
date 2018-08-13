@@ -4,41 +4,48 @@
 
     <div class="row">
 
-      <h2 class="center-align">Edit
-        <%= campground.name %>
-      </h2>
+      <h5 class="center-align">Edit
+        <strong class="teal-text">
+          <%= campground.name %>
+        </strong>
+      </h5>
 
       <div style="width: 80%; margin: 50px auto;">
 
 
         <form method="post" action="/campgrounds/<%= campground._id %>?_method=PUT" enctype="multipart/form-data">
           <div class="input-field">
-            <input value="<%= campground.name %>" required type="text" name="campground[name]" placeholder="New Campground">
-            <label for="campground[name]">First Name</label>
+            <input value="<%= campground.name %>" required type="text" name="campground[name]" autofocus>
+            <label for="campground[name]">Campground Name</label>
+          </div>
+
+          <div>
+            <input style="display: none" type="file" id="campground[image]" name="campground[image]" accept="image/*" required>
+            <label for="campground[image]" class="waves-effect waves-light btn">Select Campground Image</label>
           </div>
 
           <div class="input-field">
-            <input type="file" id="campground[image]" name="campground[image]" accept="image/*">
+            <input value="<%= campground.description %>" required type="text" name="campground[description]">
+            <label for="campground[description]">Description</label>
           </div>
 
           <div class="input-field">
-            <input value="<%= campground.description %>" required type="text" name="campground[description]" placeholder="Description">
+            <input value="<%= campground.price %>" required type="number" min="0.01" step="0.01" max="999999" name="campground[price]">
+            <label for="campground[price]">Price</label>
           </div>
 
           <div class="input-field">
-            <input value="<%= campground.price %>" required type="number" min="0.01" step="0.01" max="999999" name="campground[price]"
-              placeholder="Price">
-          </div>
-
-          <div class="input-field">
-            <input value="<%= campground.location %>" required type="text" name="campground[location]" placeholder="Location">
+            <input value="<%= campground.location %>" required type="text" name="campground[location]">
+            <label for="campground[location]">Location</label>
           </div>
 
           <button class="waves-effect waves-light btn">Edit Campground</button>
         </form>
 
+        <br>
+
         <div>
-          <a href="/campgrounds">Go Back</a>
+          <a href="/campgrounds/<%= campground.id %>">Go Back</a>
         </div>
 
       </div>
