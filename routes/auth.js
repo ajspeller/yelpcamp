@@ -28,7 +28,7 @@ router.post('/register', (req, res) => {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
-    avatar: req.body.avatar,
+    avatar: "https://images.unsplash.com/photo-1473492201326-7c01dd2e596b?ixlib=rb-0.3.5&s=25165df719570461f7dc2be8a75a74bb&auto=format&fit=crop&w=1351&q=80", //req.body.avatar,
     isAdmin: req.body.adminCode === process.env.YELPCAMP_ADMINCODE ? true : false
   });
   User.register(newUser, req.body.password, (err, user) => {
