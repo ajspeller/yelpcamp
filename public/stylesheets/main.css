@@ -19,3 +19,9 @@ html {
   height: 400px;
   width: 100%;
 }
+
+.sites {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: 50px;
+}
